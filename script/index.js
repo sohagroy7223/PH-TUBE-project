@@ -65,4 +65,3 @@ const displayVideos = (videos) => {
 };
 
 loadCategoric();
-loadVideos();
