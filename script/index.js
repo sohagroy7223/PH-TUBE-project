@@ -40,6 +40,18 @@ function displayCategoric(categories) {
 const displayVideos = (videos) => {
   const videosContainer = document.getElementById("video-container");
   videosContainer.innerHTML = "";
+
+  if (videos.length === 0) {
+    videosContainer.innerHTML = `
+    
+    <div class="py-20 col-span-full text-center flex flex-col items-center">
+            <img class="w-[110px]" src="./assets/Icon.png" alt="">
+            <h2 class="text-2xl font-bold ">Oops!! Sorry, There is no content here</h2>
+        </div>
+    `;
+    return;
+  }
+
   videos.forEach((video) => {
     const videoCard = document.createElement("div");
     videoCard.innerHTML = `
