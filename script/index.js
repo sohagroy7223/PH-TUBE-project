@@ -18,7 +18,11 @@ const loadCategoricVideos = (id) => {
   console.log(url);
   fetch(url)
     .then((response) => response.json())
-    .then((data) => displayVideos(data.category));
+    .then((data) => {
+      const clickButton = document.getElementById(`btn-${id}`);
+      clickButton.classList.add("active");
+      displayVideos(data.category);
+    });
 };
 
 function displayCategoric(categories) {
@@ -30,7 +34,7 @@ function displayCategoric(categories) {
     // create element
     const categoriesDiv = document.createElement("div");
     categoriesDiv.innerHTML = `
-  <button onclick="loadCategoricVideos(${cat.category_id})" class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
+  <button id="btn-${cat.category_id}" onclick="loadCategoricVideos(${cat.category_id})" class="btn btn-sm hover:text-white hover:bg-[#FF1F3D]">${cat.category}</button>
   `;
     //   append child
     categoriesContainer.append(categoriesDiv);
@@ -43,8 +47,7 @@ const displayVideos = (videos) => {
 
   if (videos.length === 0) {
     videosContainer.innerHTML = `
-    
-    <div class="py-20 col-span-full text-center flex flex-col items-center">
+       <div class="py-20 col-span-full text-center flex flex-col items-center">
             <img class="w-[110px]" src="./assets/Icon.png" alt="">
             <h2 class="text-2xl font-bold ">Oops!! Sorry, There is no content here</h2>
         </div>
