@@ -8,22 +8,28 @@ function loadCategoric() {
 
 // video category load by fetch here***************
 
-function loadVideosCategories() {
+function loadVideos() {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((response) => response.json())
-    .then((data) => displayVideoCategories(data.videos));
+    .then((data) => displayVideo(data.videos));
 }
 
+function CategoryVideosID(id) {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+  console.log(url);
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayVideo(data.category));
+}
 // video necessary title***************
 // authors
 // :
-// [{…}]
 // category_id
 // :
 // "1001"
 // description
 // :
-// "Dive into the rhythm of 'Shape of You,' a captivating track that blends pop sensibilities with vibrant beats. Created by Olivia Mitchell, this song has already gained 100K views since its release. With its infectious melody and heartfelt lyrics, 'Shape of You' is perfect for fans looking for an uplifting musical experience. Let the music take over as Olivia's vocal prowess and unique style create a memorable listening journey."
 // others
 // :
 // {views: '100K', posted_date: '16278'}
@@ -51,27 +57,35 @@ function loadVideosCategories() {
 // :
 // ""
 
+// displaycategoryVideosID************
+
 // display video categories************
-function displayVideoCategories(videos) {
+function displayVideo(videos) {
   // parent div where append the child/value*********
   const videosContainer = document.getElementById("videos-container");
+  videosContainer.innerHTML = "";
   for (const video of videos) {
     const videoCard = document.createElement("div");
     videoCard.innerHTML = `
-    <div class="card bg-base-100 shadow-sm">
-  <figure>
-    <img
-      src="${video.thumbnail}"
-      alt="Shoes" />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">${video.title}</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div class="card-actions justify-end">
-      
-    </div>
-  </div>
-</div>
+     <div class="card bg-base-100  shadow-sm">
+            <figure>
+                <img class="w-full h-[150px] object-cover" src="${video.thumbnail}" alt="thumbnail" />
+            </figure>
+            <div class=" flex gap-3">
+                <div>
+                    <div class="avatar p-2">
+                        <div class="ring-primary ring-offset-base-100 w-8  rounded-full ring-2 ring-offset-2">
+                            <img src="${video.authors[0].profile_picture}" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="card-title">${video.title}</h2>
+                    <p>${video.authors[0].profile_name}</p>
+                    <p>${video.others.views}</p>
+                </div>
+            </div>
+        </div>
     `;
     videosContainer.append(videoCard);
   }
@@ -87,7 +101,8 @@ function displayCategoric(categories) {
     // console.log(cat);
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
-     <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+
+     <button onclick="CategoryVideosID(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
    
     `;
     categoriesContainer.append(categoryDiv);
@@ -95,4 +110,3 @@ function displayCategoric(categories) {
 }
 
 loadCategoric();
-loadVideosCategories();
