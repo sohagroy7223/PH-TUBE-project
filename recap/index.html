@@ -7,6 +7,12 @@
     <title>Recap PH TUBE</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .active {
+            background-color: #FF1F3D;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,12 +41,17 @@
     <nav id="category-container" class="flex justify-center py-5 gap-3">
         <div>
 
-            <button onclick="loadVideos()" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">All</button>
+            <button id="allBtn" onclick="loadVideos()"
+                class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">All</button>
         </div>
     </nav>
 
     <section id="videos-container" class="w-11/12 mx-auto grid grid-cols-4 gap-5">
 
+        <div class="col-span-full text-center flex flex-col justify-center items-center py-10">
+            <img src="../assets/Icon.png" alt="">
+            <h2 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h2>
+        </div>
     </section>
     <script src="./fetch.js"></script>
 </body>
