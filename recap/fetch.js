@@ -15,8 +15,10 @@ function loadCategoric() {
 
 // video category load by fetch here***************
 
-function loadVideos() {
-  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText) {
+  fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`
+  )
     .then((response) => response.json())
     .then((data) => {
       removeActiveBtn();
@@ -128,7 +130,9 @@ function displayVideo(videos) {
     videoCard.innerHTML = `
      <div class="card bg-base-100  shadow-sm">
             <figure>
-                <img class="w-full h-[150px] object-cover" src="${video.thumbnail}" alt="thumbnail" />
+                <img class="w-full h-[150px] object-cover" src="${
+                  video.thumbnail
+                }" alt="thumbnail" />
             </figure>
             <div class=" flex gap-3">
                 <div>
@@ -140,11 +144,22 @@ function displayVideo(videos) {
                 </div>
                 <div>
                     <h2 class="card-title">${video.title}</h2>
-                    <p>${video.authors[0].profile_name}</p>
-                    <p>${video.others.views}</p>
+                      <p class="flex gap-1 items-center text-gray-500 text-sm">${
+                        video.authors[0].profile_name
+                      }
+                         ${
+                           video.authors[0].verified === true
+                             ? `<img class="w-5 h-5"
+                               src="https://img.icons8.com/?size=100&id=98A4yZTt9abw&format=png&color=000000" alt=""`
+                             : ``
+                         }
+                      </p>
+                    <p class="text-gray-500 text-sm">${video.others.views}</p>
                 </div>
             </div>
-            <button onclick="showDetailsID('${video.video_id}')" class="btn btn-block">show details  </button>
+            <button onclick="showDetailsID('${
+              video.video_id
+            }')" class="btn btn-block">show details  </button>
         </div>
     `;
     videosContainer.append(videoCard);
@@ -168,5 +183,12 @@ function displayCategoric(categories) {
     categoriesContainer.append(categoryDiv);
   }
 }
+
+document
+  .getElementById("input-text")
+  .addEventListener("keyup", function (event) {
+    const input = event.target.value;
+    loadVideos(input);
+  });
 
 loadCategoric();
