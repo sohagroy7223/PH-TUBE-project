@@ -1,3 +1,12 @@
+function showLoader() {
+  document.getElementById("loader").classList.remove("hidden");
+  document.getElementById("videos-container").classList.add("hidden");
+}
+function hiddenLoader() {
+  document.getElementById("loader").classList.add("hidden");
+  document.getElementById("videos-container").classList.remove("hidden");
+}
+
 function removeActiveBtn() {
   const activeBtn = document.getElementsByClassName("active");
   for (const btn of activeBtn) {
@@ -15,7 +24,8 @@ function loadCategoric() {
 
 // video category load by fetch here***************
 
-function loadVideos(searchText) {
+function loadVideos(searchText = "") {
+  showLoader();
   fetch(
     `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`
   )
@@ -29,6 +39,7 @@ function loadVideos(searchText) {
 }
 
 function CategoryVideosID(id) {
+  showLoader();
   const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
   // console.log(url);
 
@@ -164,6 +175,7 @@ function displayVideo(videos) {
     `;
     videosContainer.append(videoCard);
   }
+  hiddenLoader();
 }
 
 // btn category display****************
