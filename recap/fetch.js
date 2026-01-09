@@ -28,7 +28,7 @@ function loadVideos() {
 
 function CategoryVideosID(id) {
   const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
-  console.log(url);
+  // console.log(url);
 
   fetch(url)
     .then((res) => res.json())
@@ -40,6 +40,39 @@ function CategoryVideosID(id) {
       displayVideo(data.category);
     });
 }
+
+function showDetailsID(videoId) {
+  // console.log(videoId);
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayShowDetails(data.video));
+}
+
+function displayShowDetails(videos) {
+  // console.log(videos);
+  document.getElementById("show_Modal").showModal();
+  const detailsContainer = document.getElementById("details-container");
+  detailsContainer.innerHTML = `
+  
+  <div class="card bg-base-100 image-full shadow-sm">
+  <figure>
+    <img
+      src="${videos.thumbnail}"
+      alt="thumbnail" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${videos.title}</h2>
+    <p>${videos.description}</p>
+    <div class="card-actions justify-end">
+      
+    </div>
+  </div>
+</div>
+  
+  `;
+}
+
 // video necessary title***************
 // authors
 // :
@@ -111,6 +144,7 @@ function displayVideo(videos) {
                     <p>${video.others.views}</p>
                 </div>
             </div>
+            <button onclick="showDetailsID('${video.video_id}')" class="btn btn-block">show details  </button>
         </div>
     `;
     videosContainer.append(videoCard);
